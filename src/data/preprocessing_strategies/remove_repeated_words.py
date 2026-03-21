@@ -1,8 +1,11 @@
 import pandas as pd
-from src.data.preprocessing.base import BasePreprocessor
+import logging
+from src.data.preprocessing_strategies.base import BasePreprocessor
+
+logger = logging.getLogger(__name__)
 
 class RemoveRepeatedWords(BasePreprocessor):
-    def process(self) -> pd.DataFrame:
+    def process(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
         def _remove_repeats(text: str) -> str:
             if not isinstance(text, str):
                 return text
@@ -14,6 +17,7 @@ class RemoveRepeatedWords(BasePreprocessor):
                     result.append(w)
             return ' '.join(result)
 
-        self.df[self.column] = self.df[self.column].apply(_remove_repeats)
+        df = df.copy()
+        df[column] = df[column].apply(_remove_repeats)
         logger.info("remove_repeated_words applied")
-        return self.df
+        return df
