@@ -1,3 +1,7 @@
+import pandas as pd
+from typing import List, Optional
+from src.data.preprocessing.base import BasePreprocessor
+
 class PreprocessingPipeline:
     def __init__(
             self, preprocess_list: List[BasePreprocessor],
@@ -5,7 +9,7 @@ class PreprocessingPipeline:
             column: str, 
             stopwords: Optional[List[str]] = None
         ):
-        
+
         """
         Args:
             preprocess_list (List[BasePreprocessor]): List of preprocessors to apply

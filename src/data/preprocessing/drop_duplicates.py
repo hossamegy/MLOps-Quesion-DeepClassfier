@@ -1,3 +1,6 @@
+import pandas as pd
+from src.data.preprocessing.base import BasePreprocessor
+
 class DropDuplicates(BasePreprocessor):
     def process(self) -> pd.DataFrame:
         self.df = self.df.drop_duplicates()

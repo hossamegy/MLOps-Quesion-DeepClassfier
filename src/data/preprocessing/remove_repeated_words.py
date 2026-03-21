@@ -1,3 +1,6 @@
+import pandas as pd
+from src.data.preprocessing.base import BasePreprocessor
+
 class RemoveRepeatedWords(BasePreprocessor):
     def process(self) -> pd.DataFrame:
         def _remove_repeats(text: str) -> str:

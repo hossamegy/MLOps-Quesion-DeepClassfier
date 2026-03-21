@@ -1,3 +1,6 @@
+import pandas as pd
+from src.data.preprocessing.base import BasePreprocessor
+
 class RemoveStopwords(BasePreprocessor):
     def __init__(self, df: pd.DataFrame, column: str, stopwords: Optional[List[str]] = None):
         super().__init__(df, column)
