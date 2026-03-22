@@ -1,0 +1,7 @@
+pipeline_steps:
+- DropNulls
+- DropDuplicates
+- LowerCaser
+- RemoveSpecialCharacters
+- RemoveStopwords
+- RemoveRepeatedWords

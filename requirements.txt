@@ -1,0 +1,3 @@
+pandas
+nltk==3.9.3
+mlflow==3.10.1
