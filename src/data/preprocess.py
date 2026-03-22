@@ -3,6 +3,7 @@ import logging
 import os
 from typing import Optional, List
 from src.data.preprocessing_strategies.base import BasePreprocessor
+from src.data.validation import DataValidator
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -11,7 +12,7 @@ class PreprocessingPipeline:
     def __init__(
             self,
             preprocess_dict: dict[str, BasePreprocessor],
-            df: pd.DataFrame, 
+            df: pd.DataFrame,
             column: str,
             stopwords: Optional[List[str]] = None
         ):
@@ -36,6 +37,7 @@ class PreprocessingPipeline:
             logger.info(f"Applying {name} preprocessor")
             self.df = preprocessor.process(df=self.df, column=self.column)
             
+        self.df = DataValidator.validate_processed_data(self.df)
         logger.info(f"Final shape: {self.df.shape}")
         return self.df
 

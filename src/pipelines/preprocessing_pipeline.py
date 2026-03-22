@@ -2,7 +2,6 @@ import os
 import sys
 from pathlib import Path
 
-# Add project root to sys.path at the absolute beginning
 root_dir = Path(__file__).resolve().parents[2]
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
@@ -44,7 +43,6 @@ def main():
         logger.error(f"Failed to load data: {str(e)}")
         return
 
-    # Initialize strategies
     preprocessors = {
         "DropNulls": DropNulls(),
         "DropDuplicates": DropDuplicates(),

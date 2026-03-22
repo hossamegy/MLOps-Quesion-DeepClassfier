@@ -1,0 +1,25 @@
+# Project Settings
+project_name: "DeepClassifier"
+experiment_name: "Arabic_Text_Classification"
+
+# Paths
+data:
+  raw_path: "experiments/dataset_versions/classfiy_data_v0.csv"
+  processed_v1: "experiments/dataset_versions/processed_data_v1.csv"
+  model_save_path: "models/checkpoints/"
+
+# Model Hyperparameters
+model:
+  name: "aubmindlab/bert-base-arabertv02"
+  num_classes: 2
+  max_length: 128
+  batch_size: 16
+  learning_rate: 2e-5
+  epochs: 5
+  dropout: 0.3
+  hidden_dim: 15
+
+# MLflow
+mlflow:
+  tracking_uri: "http://localhost:5000" # Optional: set to local or remote
+  db_path: "mlruns.db"

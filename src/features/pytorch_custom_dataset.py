@@ -1,8 +1,12 @@
 import torch
 from torch.utils.data import Dataset
+from transformers import AutoTokenizer
 
-class classificationDataset(Dataset):
-    def __init__(self, texts, labels, tokenizer, max_len=32):
+class ClassificationDataset(Dataset):
+    """
+    Custom Dataset for BERT-based text classification.
+    """
+    def __init__(self, texts: list, labels: list, tokenizer: AutoTokenizer, max_len: int = 128):
         self.texts = texts
         self.labels = labels
         self.tokenizer = tokenizer
@@ -12,7 +16,7 @@ class classificationDataset(Dataset):
         return len(self.texts)
 
     def __getitem__(self, idx):
-        text = self.texts[idx]
+        text = str(self.texts[idx])
         label = self.labels[idx]
 
         encoding = self.tokenizer(
@@ -25,7 +29,7 @@ class classificationDataset(Dataset):
         )
 
         return {
-            'input_ids': encoding['input_ids'].squeeze(0),
-            'attention_mask': encoding['attention_mask'].squeeze(0),
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
             'labels': torch.tensor(label, dtype=torch.long)
         }
