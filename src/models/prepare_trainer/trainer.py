@@ -18,6 +18,9 @@ class Trainer:
         self.device = device
         self.encoder = encoder
         self.tokenizer = tokenizer
+        
+        if (self.config['model']['fine_tune']):
+            self.model.load_state_dict(torch.load(self.config['model']['head_model']))
 
         logger.info(f"device: {self.device}")
 
@@ -137,3 +140,4 @@ class Trainer:
 
             if best_val_acc == 0:
                 logger.warning("No improvement during training")
+    

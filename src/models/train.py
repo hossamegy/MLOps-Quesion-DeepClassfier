@@ -22,8 +22,9 @@ class TrainingPipeline:
         
         self.encoder = TargetLabelEncoder().load(str(self.encoder_file))
 
+        
         self.model = Classifier(
-            model_name=self.config['model']['name'],
+            model_name=self.config['model']['base_model'],
             num_classes=self.config['model']['num_classes'],
             hidden_dim=self.config['model']['hidden_dim'],
             dropout_rate=self.config['model']['dropout']
