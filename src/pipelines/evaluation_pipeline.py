@@ -1,16 +1,17 @@
 import sys
-import yaml
-import torch
-import logging
-import mlflow
 from pathlib import Path
-from torch.utils.data import DataLoader
-from transformers import AutoTokenizer
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 root_dir = Path(__file__).resolve().parents[2]
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
+
+import yaml
+import torch
+import logging
+import mlflow
+from torch.utils.data import DataLoader
+from transformers import AutoTokenizer
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 from src.data.load_data import CsvLoader
 from src.features.label_encoder import TargetLabelEncoder
