@@ -5,8 +5,8 @@ experiment_name: "Arabic_Text_Classification"
 # Paths
 data:
   raw_path: "experiments/dataset_versions/classfiy_data_v0.csv"
-  processed_v1: "experiments/dataset_versions/processed_data_v1.csv"
-  model_save_path: "experiments/models_versions/complexity_models_v1/checkpoints/"
+  processed: "experiments/dataset_versions/processed_data_v2.csv"
+  model_save_path: "experiments/models_versions/intent_models_v2/checkpoints/"
   target: "intent"
 
 # Model Hyperparameters

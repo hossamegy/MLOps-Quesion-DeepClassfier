@@ -1,15 +1,18 @@
 import sys
 from pathlib import Path
-
-root_dir = Path(__file__).resolve().parents[2]
-if str(root_dir) not in sys.path:
-    sys.path.insert(0, str(root_dir))
-
 import os
 import nltk
 from nltk.corpus import stopwords
 import mlflow
 import logging
+import yaml
+
+nltk.download('stopwords')
+arabic_stopwords = set(stopwords.words('arabic'))
+
+root_dir = Path(__file__).resolve().parents[2]
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
 
 from src.data.load_data import CsvLoader
 from src.data.preprocess import PreprocessingPipeline
@@ -20,19 +23,18 @@ from src.data.preprocessing_strategies.drop_null import DropNulls
 from src.data.preprocessing_strategies.drop_duplicates import DropDuplicates
 from src.data.preprocessing_strategies.remove_repeated_words import RemoveRepeatedWords
 
-nltk.download('stopwords')
-# Use set for faster lookups
-arabic_stopwords = set(stopwords.words('arabic'))
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def main():
+    with open("config/main_config.yaml", "r") as f:
+        config = yaml.safe_load(f)
+
     # Set default values
-    raw_data_path = "experiments/dataset_versions/classfiy_data_v0.csv"
-    processed_data_path = "experiments/dataset_versions/processed_data_v1.csv"
+    raw_data_path = config['data']['raw_path']
+    processed_data_path = config['data']['processed']
     config_path = "config/preprocessing_pipeline.yaml"
-    target_column = "question"
+    target_column = config['data']['target']
     
     logger.info(f"Starting Preprocessing Pipeline")
     loader = CsvLoader(file_path=raw_data_path)
@@ -48,7 +50,7 @@ def main():
         "DropDuplicates": DropDuplicates(),
         "LowerCaser": LowerCaser(),
         "RemoveSpecialCharacters": RemoveSpecialCharacters(),
-        "RemoveStopwords": RemoveStopwords(stopwords=list(arabic_stopwords)),
+        # "RemoveStopwords": RemoveStopwords(stopwords=list(arabic_stopwords)),
         "RemoveRepeatedWords": RemoveRepeatedWords()
     }
 
@@ -70,7 +72,6 @@ def main():
         os.makedirs(os.path.dirname(config_path), exist_ok=True)
 
         with open(config_path, "w") as f:
-            import yaml
             yaml.dump({"pipeline_steps": pipeline_steps}, f)
 
         mlflow.log_params({"pipeline_steps": str(pipeline_steps), "target_column": target_column})

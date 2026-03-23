@@ -3,5 +3,4 @@ pipeline_steps:
 - DropDuplicates
 - LowerCaser
 - RemoveSpecialCharacters
-- RemoveStopwords
 - RemoveRepeatedWords
