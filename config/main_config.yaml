@@ -17,7 +17,9 @@ model:
   learning_rate: 2e-5
   epochs: 5
   dropout: 0.3
-  hidden_dim: 15
+  hidden_dim: 128
+
+  traing_val_split: 0.8
 
 # MLflow
 mlflow:
