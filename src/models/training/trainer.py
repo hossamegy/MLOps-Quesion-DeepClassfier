@@ -1,12 +1,16 @@
 from pathlib import Path
 import mlflow
-from sklearn.base import accuracy_score
+from sklearn.metrics import accuracy_score
 import torch
 from tqdm import tqdm
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Trainer:
-    def __init__(self, encoder, model, optimizer, criterion, device):
+    def __init__(self, config, encoder, model, optimizer, criterion, device):
+        self.config = config
         self.model = model
         self.optimizer = optimizer
         self.criterion = criterion
