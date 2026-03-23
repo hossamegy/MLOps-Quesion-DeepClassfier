@@ -6,11 +6,11 @@ experiment_name: "Arabic_Text_Classification"
 data:
   raw_path: "experiments/dataset_versions/classfiy_data_v0.csv"
   processed_v1: "experiments/dataset_versions/processed_data_v1.csv"
-  model_save_path: "models/checkpoints/"
+  model_save_path: "experiments/models_versions/complexity_models_v1/checkpoints/"
 
 # Model Hyperparameters
 model:
-  name: "aubmindlab/bert-base-arabertv02"
+  name: "experiments/models_versions/complexity_bert_v0"
   num_classes: 2
   max_length: 128
   batch_size: 16
@@ -23,5 +23,5 @@ model:
 
 # MLflow
 mlflow:
-  tracking_uri: "http://localhost:5000" # Optional: set to local or remote
+  tracking_uri: "http://localhost:5000"
   db_path: "mlruns.db"
