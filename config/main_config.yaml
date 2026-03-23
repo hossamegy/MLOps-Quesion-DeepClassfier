@@ -6,13 +6,15 @@ experiment_name: "Arabic_Text_Classification"
 data:
   raw_path: "experiments/dataset_versions/classfiy_data_v0.csv"
   processed: "experiments/dataset_versions/processed_data_v2.csv"
-  model_save_path: "experiments/models_versions/intent_models_v2/checkpoints/"
+  model_save_path: "experiments/models_versions/intent_models_v3/checkpoints/"
   target: "intent"
 
 # Model Hyperparameters
 model:
-  name: "experiments/models_versions/complexity_bert_v0"
-  tokenizer: "aubmindlab/bert-base-arabertv02"
+  base_model: "experiments/models_versions/intent_models_v2/checkpoints/bert_model"
+  head_model: "experiments/models_versions/intent_models_v2/checkpoints/full_model.pth"
+  tokenizer: "experiments/models_versions/intent_models_v2/checkpoints/bert_model"
+  
   num_classes: 10
   max_length: 128
   batch_size: 16
@@ -22,7 +24,7 @@ model:
   hidden_dim: 128
 
   train_val_split: 0.8
-
+  fine_tune: True
 # MLflow
 mlflow:
   tracking_uri: "http://localhost:5000"
