@@ -40,7 +40,12 @@ class TargetLabelEncoder:
 
     def load(self, path: str):
         if not os.path.exists(path):
-            raise FileNotFoundError(f"No encoder found at {path}")
+            logger.info(f"Create LabelEncoder and saved to {path}")
+            self.encoder = LabelEncoder()
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "wb") as f:
+                pickle.dump(self.encoder, f)  
+
         with open(path, "rb") as f:
             self.encoder = pickle.load(f)
         self.is_fitted = True

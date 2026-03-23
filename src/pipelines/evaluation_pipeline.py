@@ -16,7 +16,7 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from src.data.load_data import CsvLoader
 from src.features.label_encoder import TargetLabelEncoder
 from src.features.pytorch_custom_dataset import ClassificationDataset
-from src.models.model import Classifier
+from src.models.classifier_model import Classifier
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -27,7 +27,7 @@ class EvaluationPipeline:
             self.config = yaml.safe_load(f)
         
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.tokenizer = AutoTokenizer.from_pretrained(self.config['model']['name'])
+        self.tokenizer = AutoTokenizer.from_pretrained(self.config['model']['tokenizer'])
         
         self.save_path = Path(self.config['data']['model_save_path'])
         self.model_file = self.save_path / "model.pth"

@@ -1,6 +1,8 @@
 import pandas as pd
 import logging
 
+import yaml
+
 logger = logging.getLogger(__name__)
 
 class DataValidator:
@@ -9,12 +11,14 @@ class DataValidator:
     """
     @staticmethod
     def validate_raw_data(df: pd.DataFrame):
+        with open("config\preprocessing_pipeline.yaml", 'r') as f:
+            config = yaml.safe_load(f)
         required_columns = ["question", "label"]
         missing = [col for col in required_columns if col not in df.columns]
         if missing:
-            if "intent" in df.columns and "label" not in df.columns:
+            if config["data"]["target"] in df.columns and "label" not in df.columns:
                 logger.warning("Found 'intent' but missing 'label'. Renaming 'intent' to 'label'.")
-                df.rename(columns={"intent": "label"}, inplace=True)
+                df.rename(columns={config["data"]["target"]: "label"}, inplace=True)
             else:
                 raise ValueError(f"Missing required columns: {missing}")
         

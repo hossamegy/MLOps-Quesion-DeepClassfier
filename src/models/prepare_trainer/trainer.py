@@ -16,7 +16,9 @@ class Trainer:
         self.criterion = criterion
         self.device = device
         self.encoder = encoder
-
+        
+        logger.info(f"device: {self.device}")
+        
     def train(self, target_col, train_loader, val_loader):
     
         mlflow.set_experiment(self.config['experiment_name'])
