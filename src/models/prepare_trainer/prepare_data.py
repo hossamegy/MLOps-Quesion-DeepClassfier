@@ -15,7 +15,7 @@ class PrepareData:
         
     def prepare(self):
         logger.info("Preparing data for training...")
-        loader = CsvLoader(self.config['data']['processed_v1'])
+        loader = CsvLoader(self.config['data']['processed'])
         df = loader.load_data()
         
         target_col = 'label' if 'label' in df.columns else df.columns[-1]

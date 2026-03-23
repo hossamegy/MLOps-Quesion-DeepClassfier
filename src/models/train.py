@@ -39,10 +39,11 @@ class TrainingPipeline:
             self.encoder,
             self.tokenizer,
         )
-        
+
         self.trainer = Trainer(
             self.config,
             self.encoder,
+            self.tokenizer,
             self.model,
             self.optimizer,
             self.criterion,

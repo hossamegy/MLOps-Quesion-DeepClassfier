@@ -3,7 +3,6 @@ from pathlib import Path
 
 import torch
 
-# Add project root to sys.path at the very beginning
 root_dir = Path(__file__).resolve().parents[2]
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
