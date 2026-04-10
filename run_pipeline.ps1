@@ -28,16 +28,20 @@ function Run-Stage($name, $script) {
     }
 }
 
-if ($Stage -eq "all" -or $Stage -eq "preprocess") {
-    Run-Stage "Preprocessing" "src/pipelines/preprocessing_pipeline.py"
-}
+if ($Stage -eq "all") {
+    Run-Stage "End-to-End" "src/pipelines/end_to_end_pipeline.py"
+} else {
+    if ($Stage -eq "preprocess") {
+        Run-Stage "Preprocessing" "src/pipelines/preprocessing_pipeline.py"
+    }
 
-if ($Stage -eq "all" -or $Stage -eq "train") {
-    Run-Stage "Training" "src/pipelines/training_pipeline.py"
-}
+    if ($Stage -eq "train") {
+        Run-Stage "Training" "src/pipelines/training_pipeline.py"
+    }
 
-if ($Stage -eq "all" -or $Stage -eq "eval") {
-    Run-Stage "Evaluation" "src/pipelines/evaluation_pipeline.py"
+    if ($Stage -eq "eval") {
+        Run-Stage "Evaluation" "src/pipelines/evaluation_pipeline.py"
+    }
 }
 
 Write-Host "`nAll requested stages finished successfully!" -ForegroundColor Green

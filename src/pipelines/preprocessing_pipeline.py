@@ -61,9 +61,12 @@ def main():
         stopwords=list(arabic_stopwords)
     )
 
-    # MLflow Tracking
-    mlflow.set_experiment("Data_Preprocessing")
-    with mlflow.start_run():
+    from contextlib import nullcontext
+    if not mlflow.active_run():
+        mlflow.set_experiment("Arabic_Text_Classification")
+    
+    run_context = mlflow.start_run(run_name="Preprocessing") if not mlflow.active_run() else nullcontext()
+    with run_context:
         preprocessor.run()
         preprocessor.save_data(file_path=processed_data_path)
         

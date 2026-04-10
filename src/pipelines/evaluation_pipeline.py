@@ -30,18 +30,18 @@ class EvaluationPipeline:
         self.tokenizer = AutoTokenizer.from_pretrained(self.config['model']['tokenizer'])
         
         self.save_path = Path(self.config['data']['model_save_path'])
-        self.model_file = self.save_path / "model.pth"
+        self.model_file = self.save_path / "full_model.pth"
         self.encoder_file = self.save_path / "label_encoder.pkl"
         
         self.encoder = TargetLabelEncoder().load(str(self.encoder_file))
         
     def prepare_data(self):
         logger.info("Preparing data for evaluation...")
-        loader = CsvLoader(self.config['data']['processed_v1'])
+        loader = CsvLoader(self.config['data']['processed'])
         df = loader.load_data()
         
-        target_col = 'label' if 'label' in df.columns else df.columns[-1]
-        text_col = 'question' if 'question' in df.columns else df.columns[0]
+        target_col = self.config['data'].get('target', 'label' if 'label' in df.columns else df.columns[-1])
+        text_col = self.config['data'].get('text_column', 'question' if 'question' in df.columns else df.columns[0])
         
         labels_encoded = self.encoder.transform(df[target_col].tolist())
         
@@ -90,8 +90,12 @@ class EvaluationPipeline:
         logger.info(f"Evaluation Accuracy: {acc:.4f}")
         logger.info(f"Classification Report:\n{report}")
         
-        mlflow.set_experiment(self.config['experiment_name'])
-        with mlflow.start_run(run_name="Evaluation"):
+        from contextlib import nullcontext
+        if not mlflow.active_run():
+            mlflow.set_experiment(self.config['experiment_name'])
+        
+        run_context = mlflow.start_run(run_name="Evaluation") if not mlflow.active_run() else nullcontext()
+        with run_context:
             mlflow.log_metric("eval_accuracy", acc)
             report_file = self.save_path / "evaluation_report.txt"
             with open(report_file, "w") as f:
