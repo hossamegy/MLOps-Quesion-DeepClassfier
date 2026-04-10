@@ -18,8 +18,8 @@ class PrepareData:
         loader = CsvLoader(self.config['data']['processed'])
         df = loader.load_data()
         
-        target_col = 'label' if 'label' in df.columns else df.columns[-1]
-        text_col = 'question' if 'question' in df.columns else df.columns[0]
+        target_col = self.config['data'].get('target', 'label' if 'label' in df.columns else df.columns[-1])
+        text_col = self.config['data'].get('text_column', 'question' if 'question' in df.columns else df.columns[0])
         
         labels_encoded = self.encoder.fit_transform(df[target_col].tolist())
         

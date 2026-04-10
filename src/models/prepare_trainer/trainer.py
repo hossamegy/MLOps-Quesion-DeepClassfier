@@ -26,11 +26,21 @@ class Trainer:
 
     def train(self, target_col, train_loader, val_loader):
 
-        mlflow.set_experiment(self.config['experiment_name'])
+        from contextlib import nullcontext
+        if not mlflow.active_run():
+            mlflow.set_experiment(self.config['experiment_name'])
 
-        with mlflow.start_run():
-            mlflow.log_params(self.config['model'])
-            mlflow.log_param("target_column", target_col)
+        run_context = mlflow.start_run(run_name="Training") if not mlflow.active_run() else nullcontext()
+        with run_context:
+            try:
+                mlflow.log_params(self.config['model'])
+            except Exception as e:
+                logger.warning(f"Could not log model params: {e}")
+
+            try:
+                mlflow.log_param("target_column", target_col)
+            except Exception as e:
+                logger.warning(f"Could not log target_column: {e}")
 
             epochs = self.config['model']['epochs']
             best_val_acc = 0.0

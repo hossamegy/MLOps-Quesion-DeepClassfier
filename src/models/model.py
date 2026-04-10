@@ -2,8 +2,8 @@ from torch import nn
 from transformers import AutoModel
 
 class Classifier(nn.Module):
-  
-    def __init__(self, model_name: str, num_classes: int, hidden_dim: int = 15, dropout_rate: float = 0.3):
+    
+    def __init__(self, model_name: str, num_classes: int, hidden_dim: int = 128, dropout_rate: float = 0.3):
         super(Classifier, self).__init__()
         self.bert = AutoModel.from_pretrained(model_name)
         self.dropout = nn.Dropout(dropout_rate)

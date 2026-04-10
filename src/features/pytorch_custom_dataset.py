@@ -3,9 +3,7 @@ from torch.utils.data import Dataset
 from transformers import AutoTokenizer
 
 class ClassificationDataset(Dataset):
-    """
-    Custom Dataset for BERT-based text classification.
-    """
+   
     def __init__(self, texts: list, labels: list, tokenizer: AutoTokenizer, max_len: int = 128):
         self.texts = texts
         self.labels = labels

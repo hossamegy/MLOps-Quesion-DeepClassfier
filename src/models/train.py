@@ -14,7 +14,7 @@ class TrainingPipeline:
             self.config = yaml.safe_load(f)
             
         self.save_path = Path(self.config['data']['model_save_path'])
-        self.model_file = self.save_path / "model.pth"
+        self.model_file = self.save_path / "full_model.pth"
         self.encoder_file = self.save_path / "label_encoder.pkl"
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

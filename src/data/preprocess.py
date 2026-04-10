@@ -16,13 +16,7 @@ class PreprocessingPipeline:
             column: str,
             stopwords: Optional[List[str]] = None
         ):
-        """
-        Args:
-            preprocess_dict (dict[str, BasePreprocessor]): Dictionary of preprocessors to apply
-            df (pd.DataFrame): DataFrame to preprocess
-            column (str): Target text column
-            stopwords (Optional[List[str]]): List of stopwords
-        """
+  
         self.df = df.copy()
         self.column = column
         self.stopwords = stopwords if stopwords else []

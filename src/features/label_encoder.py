@@ -7,9 +7,7 @@ from typing import List, Any
 logger = logging.getLogger(__name__)
 
 class TargetLabelEncoder:
-    """
-    A wrapper around sklearn's LabelEncoder with persistence capabilities.
-    """
+ 
     def __init__(self):
         self.encoder = LabelEncoder()
         self.is_fitted = False

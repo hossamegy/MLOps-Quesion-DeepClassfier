@@ -4,17 +4,15 @@ experiment_name: "Arabic_Text_Classification"
 
 # Paths
 data:
-  raw_path: "experiments/dataset_versions/classfiy_data_v0.csv"
-  processed: "experiments/dataset_versions/processed_data_v2.csv"
-  model_save_path: "experiments/models_versions/intent_models_v3/checkpoints/"
+  raw_path: "experiments/dataset/classfiy_data.csv"
+  processed: "experiments/dataset/processed_data.csv"
+  model_save_path: "experiments/models/checkpoints/"
   target: "intent"
 
 # Model Hyperparameters
 model:
-  base_model: "experiments/models_versions/intent_models_v2/checkpoints/bert_model"
-  head_model: "experiments/models_versions/intent_models_v2/checkpoints/full_model.pth"
-  tokenizer: "experiments/models_versions/intent_models_v2/checkpoints/bert_model"
-  
+  base_model: "experiments/bert"
+  tokenizer: "experiments/bert"
   num_classes: 10
   max_length: 128
   batch_size: 16
@@ -24,7 +22,7 @@ model:
   hidden_dim: 128
 
   train_val_split: 0.8
-  fine_tune: True
+  fine_tune: False
 # MLflow
 mlflow:
   tracking_uri: "http://localhost:5000"

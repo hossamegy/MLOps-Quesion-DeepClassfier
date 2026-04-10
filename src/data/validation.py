@@ -6,9 +6,7 @@ import yaml
 logger = logging.getLogger(__name__)
 
 class DataValidator:
-    """
-    Basic schema validation for MLOps pipelines.
-    """
+
     @staticmethod
     def validate_raw_data(df: pd.DataFrame):
         with open("config\preprocessing_pipeline.yaml", 'r') as f:
